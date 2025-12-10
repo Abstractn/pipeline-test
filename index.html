@@ -1,7 +1,20 @@
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-  </head>
+    <script id="redirect-guard">
+      (() => {
+        const originPathName = '/pipeline-test/';
+        const targetPathName = '/pipeline-test/dist/';
+        const currentPathName = window.location.pathname;
+        if(currentPathName === originPathName) {
+          window.location = targetPathName;
+        }
+      })();
+    </script>
   
-  <body>
-  </body>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Github Pipeline test</title>
+  </head>
+  {{> main }}
 </html>

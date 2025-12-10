@@ -1,30 +1,23 @@
-import { TestInterface } from './interfaces.ts';
-import { TestCollectionInterface } from './interfaces.ts';
+import './main.scss';
 
+import { AbsComponentManager } from 'abs-component';
+import { absPolyfill } from 'abs-utilities';
 
-function runTest(itemQuantity: number): TestCollectionInterface {
-  let res: TestCollectionInterface = [];
-  res.id = 1;
-  res.expirationDate = new Date();
-  for(let i = 0; i < itemQuantity; i++) {
-    const collectionItem: TestInterface = {
-      id: i,
-      label: `item${i}`
-    };
-    res.collection.push(collectionItem);
-  }
-  return res;
-}
+import { Test } from './components/test/test.component';
 
+absPolyfill();
 
+export const absComponentManager = new AbsComponentManager({
+  nodeAttributeSelector: 'cmp',
+});
 
+[
+  Test,
+].forEach(Component => {
+  absComponentManager.registerComponent(
+    Component.prototype.constructor.name,
+    Component
+  );
+});
 
-
-function init(): void {
-  console.log('[INIT]');
-  
-  const collection: TestCollectionInterface = runTest(5);
-  console.log(collection);
-}
-
-init();
+absComponentManager.initComponents();
